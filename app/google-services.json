@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578327064910",
+    "project_id": "grousource",
+    "storage_bucket": "grousource.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578327064910:android:9e94f5d9cbacb7e745ee1f",
+        "android_client_info": {
+          "package_name": "com.grousale.grousource"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578327064910-nqjeoekvgr4iipkakcgusb7njm1t18fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmdPoss7CNx-65d30PFanOw6ZFtW9Qfbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578327064910-nqjeoekvgr4iipkakcgusb7njm1t18fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
