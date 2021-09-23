@@ -35,6 +35,7 @@ import com.grousale.grousource.LocationActivity;
 import com.grousale.grousource.R;
 import com.grousale.grousource.databinding.FragmentAddBinding;
 import com.grousale.grousource.utility.Constants;
+import com.grousale.grousource.utility.CustomPrefManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -88,6 +89,10 @@ public class AddFragment extends Fragment {
             }
         });
 
+        CustomPrefManager customPrefManager = new CustomPrefManager(getContext());
+        customPrefManager.putString(Constants.LATITUDE,"Not provided");
+        customPrefManager.putString(Constants.LONGITUDE,"Not provided");
+
 
         progressDialog = new ProgressDialog(getContext());
 
@@ -116,6 +121,7 @@ public class AddFragment extends Fragment {
 
     private void addToFireStore() {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
+        CustomPrefManager customPrefManager = new CustomPrefManager(getContext());
         HashMap<String, Object> product = new HashMap<>();
         product.put(Constants.KEY_PRODUCT_NAME,productName);
         product.put(Constants.KEY_PRODUCT_PRICE,productPrice);
@@ -124,6 +130,8 @@ public class AddFragment extends Fragment {
         product.put(Constants.KEY_SHOP_NAME,shopname);
         product.put(Constants.KEY_SHOP_PHONE,phone);
         product.put(Constants.KEY_PRODUCT_IMAGE_URL,downloadUrl);
+        product.put(Constants.LATITUDE,customPrefManager.getString(Constants.LATITUDE));
+        product.put(Constants.LONGITUDE,customPrefManager.getString(Constants.LONGITUDE));
 
         database.collection(Constants.KEY_PRODUCT_DB)
                 .document(productName+phone)

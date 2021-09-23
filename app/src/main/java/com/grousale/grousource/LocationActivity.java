@@ -1,12 +1,17 @@
 package com.grousale.grousource;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.grousale.grousource.utility.Constants;
+import com.grousale.grousource.utility.CustomPrefManager;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -30,6 +35,9 @@ public class LocationActivity extends AppCompatActivity implements
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
     private MapView mapView;
+    private Button fetch;
+    private boolean ready = false;
+    private double longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +50,40 @@ public class LocationActivity extends AppCompatActivity implements
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_location);
 
+
+
         mapView = findViewById(R.id.mapView);
+        fetch = findViewById(R.id.fetch_location);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        fetch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!ready){
+                    Toast.makeText(LocationActivity.this, "Please wait for map to get ready", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    CustomPrefManager customPrefManager = new CustomPrefManager(LocationActivity.this);
+                    customPrefManager.putString(Constants.LATITUDE,String.valueOf(latitude));
+                    customPrefManager.putString(Constants.LONGITUDE,String.valueOf(longitude));
+                    onStop();
+                    finish();
+
+                }
+            }
+        });
     }
+
+
 
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         LocationActivity.this.mapboxMap = mapboxMap;
 
-        mapboxMap.setStyle(new Style.Builder().fromUrl("mapbox://styles/mapbox/cjerxnqt3cgvp2rmyuxbeqme7"),
+        mapboxMap.setStyle(new Style.Builder().fromUrl("mapbox://styles/mapbox/streets-v11"),
                 new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
@@ -83,6 +115,10 @@ public class LocationActivity extends AppCompatActivity implements
 
             // Set the component's render mode
             locationComponent.setRenderMode(RenderMode.COMPASS);
+
+            ready = true;
+            longitude = locationComponent.getLastKnownLocation().getLongitude();
+            latitude = locationComponent.getLastKnownLocation().getLatitude();
 
             Log.d("Location",String.valueOf(locationComponent.getLastKnownLocation().getLatitude())+","
                     +String.valueOf(locationComponent.getLastKnownLocation().getLongitude()));

@@ -2,6 +2,9 @@ package com.grousale.grousource.utility;
 
 public class Constants {
 
+    public static final String KEY_PREFERENCE_MANAGER = "custompref";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 
     public static final String KEY_PRODUCT_DB = "productDB";
 

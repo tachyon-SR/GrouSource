@@ -2,12 +2,12 @@ package com.grousale.grousource.model;
 
 public class product {
 
-    String productName, shopName, shopAddress, shopLandmark, shopPhone, productImageUrl, productPrice;
+    String productName, shopName, shopAddress, shopLandmark, shopPhone, productImageUrl, productPrice,longitude, latitude;
 
     public product() {
     }
 
-    public product(String productName, String shopName, String shopAddress, String shopLandmark, String shopPhone, String productImageUrl, String productPrice) {
+    public product(String productName, String shopName, String shopAddress, String shopLandmark, String shopPhone, String productImageUrl, String productPrice, String longitude, String latitude) {
         this.productName = productName;
         this.shopName = shopName;
         this.shopAddress = shopAddress;
@@ -15,6 +15,32 @@ public class product {
         this.shopPhone = shopPhone;
         this.productImageUrl = productImageUrl;
         this.productPrice = productPrice;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public String getProductImageUrl() {
+        return productImageUrl;
+    }
+
+    public void setProductImageUrl(String productImageUrl) {
+        this.productImageUrl = productImageUrl;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
     public String getproductImageUrl() {
