@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "578327064910",
+    "firebase_url": "https://grousource-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "grousource",
     "storage_bucket": "grousource.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "578327064910-46amtsmd7dgq3loilmgo3hsb20hqkofb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grousale.grousource",
+            "certificate_hash": "0c2c378e341519f4019b6d662c97224a5e47d525"
+          }
+        },
         {
           "client_id": "578327064910-nqjeoekvgr4iipkakcgusb7njm1t18fi.apps.googleusercontent.com",
           "client_type": 3
