@@ -90,7 +90,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void showData(String searchQuery) {
-        query = productRef.whereGreaterThanOrEqualTo("productName",searchQuery);
+        query = productRef.whereEqualTo("productName",searchQuery);
 
 
 
@@ -107,8 +107,8 @@ public class SearchFragment extends Fragment {
                 holder.productName.setText(model.getProductName());
                 holder.shopAddress.setText(model.getShopAddress());
                 holder.shopName.setText(model.getShopName());
-                Log.d("Image",model.getproductImageUrl());
-                Glide.with(getActivity()).load(model.getproductImageUrl()).into(holder.productImage);
+                Log.d("Image",model.getProductImageUrl());
+                Glide.with(getActivity()).load(model.getProductImageUrl()).into(holder.productImage);
             }
 
             @NonNull

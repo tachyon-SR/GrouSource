@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.grousale.grousource">
+
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        tools:remove="android:maxSdkVersion" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrouSource">
-        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".activity.AdminActivity"></activity>
+        <activity android:name=".LocationActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

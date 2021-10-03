@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.grousale.grousource.R;
 import com.grousale.grousource.fragment.AddFragment;
+import com.grousale.grousource.fragment.InventoryFragment;
 import com.grousale.grousource.fragment.SearchFragment;
 
 /**
@@ -36,7 +37,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
             case 1: return new SearchFragment();
 
-            case 2: return PlaceholderFragment.newInstance(position + 1);
+            case 2: return new InventoryFragment();
 
             default: return null;
         }

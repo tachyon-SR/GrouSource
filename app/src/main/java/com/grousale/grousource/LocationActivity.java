@@ -1,6 +1,8 @@
 package com.grousale.grousource;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,9 +28,6 @@ import com.mapbox.mapboxsdk.maps.Style;
 
 import java.util.List;
 
-/**
- * Use the LocationComponent to easily add a device location "puck" to a Mapbox map.
- */
 public class LocationActivity extends AppCompatActivity implements
         OnMapReadyCallback, PermissionsListener {
 
@@ -51,6 +50,14 @@ public class LocationActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_location);
 
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
+            int res = checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE);
+            if (res != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.READ_PHONE_STATE}, 123);
+            }
+
+        }
 
         mapView = findViewById(R.id.mapView);
         fetch = findViewById(R.id.fetch_location);

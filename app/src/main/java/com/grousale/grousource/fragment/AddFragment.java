@@ -3,8 +3,10 @@ package com.grousale.grousource.fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,10 +53,12 @@ public class AddFragment extends Fragment {
     String productName, productPrice, phone, address, landmark, shopname;
     EditText productNameET, productPriceET, phoneET, addressET, landmarkET, shopNameET;
     ImageView imageView;
-    Button submit,detect;
+    Button submit,detect,available, notAvailable;
     private String downloadUrl, storageDIR, finalText;
     private ProgressDialog progressDialog;
     private Uri uri;
+    private  int availability=1;
+    CustomPrefManager customPrefManager;
 
     public AddFragment() {
         // Required empty public constructor
@@ -63,6 +68,8 @@ public class AddFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+       customPrefManager = new CustomPrefManager(getContext());
 
     }
 
@@ -80,6 +87,8 @@ public class AddFragment extends Fragment {
         shopNameET = binding.productShopName;
         imageView = binding.productImage;
         detect = binding.productDetect;
+        available = binding.availableButton;
+        notAvailable = binding.notAvailableButton;
 
         detect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +98,24 @@ public class AddFragment extends Fragment {
             }
         });
 
-        CustomPrefManager customPrefManager = new CustomPrefManager(getContext());
+        available.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                available.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#14ff14")));
+                notAvailable.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffffff")));
+                availability=1;
+            }
+        });
+
+        notAvailable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                available.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffffff")));
+                notAvailable.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF3131")));
+                availability=0;
+            }
+        });
+
         customPrefManager.putString(Constants.LATITUDE,"Not provided");
         customPrefManager.putString(Constants.LONGITUDE,"Not provided");
 
@@ -108,7 +134,8 @@ public class AddFragment extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkValues()) {
+                boolean b = checkValues();
+                if(b) {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("image/");
                     startActivityForResult(intent, 104);
@@ -121,7 +148,6 @@ public class AddFragment extends Fragment {
 
     private void addToFireStore() {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        CustomPrefManager customPrefManager = new CustomPrefManager(getContext());
         HashMap<String, Object> product = new HashMap<>();
         product.put(Constants.KEY_PRODUCT_NAME,productName);
         product.put(Constants.KEY_PRODUCT_PRICE,productPrice);
@@ -132,6 +158,7 @@ public class AddFragment extends Fragment {
         product.put(Constants.KEY_PRODUCT_IMAGE_URL,downloadUrl);
         product.put(Constants.LATITUDE,customPrefManager.getString(Constants.LATITUDE));
         product.put(Constants.LONGITUDE,customPrefManager.getString(Constants.LONGITUDE));
+        product.put(Constants.KEY_AVAILABILITY,availability);
 
         database.collection(Constants.KEY_PRODUCT_DB)
                 .document(productName+phone)
@@ -160,7 +187,43 @@ public class AddFragment extends Fragment {
         address = addressET.getText().toString().trim();
         landmark = landmarkET.getText().toString().trim();
         shopname = shopNameET.getText().toString().trim();
-        return true;
+
+        if(TextUtils.isEmpty(productName)){
+            Toast.makeText(getContext(), "Name needed" , Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else if(TextUtils.isEmpty(shopname) && availability==1){
+            Toast.makeText(getContext(), "Shop name needed", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else if(TextUtils.isEmpty(address) && availability==1){
+            Toast.makeText(getContext(), "Address needed", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else if(TextUtils.isEmpty(landmark) && availability==1){
+            Toast.makeText(getContext(), "Landmark needed", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else if(TextUtils.isEmpty(String.valueOf(productPrice)) && availability==1){
+            Toast.makeText(getContext(), "Price needed", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else if(TextUtils.isEmpty(String.valueOf(phone)) && availability==1){
+            Toast.makeText(getContext(), "Phone needed", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else if (customPrefManager.getString(Constants.LONGITUDE)=="Not Provided"){
+            Toast.makeText(getContext(), "Detect Location", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else return true;
     }
 
     @Override

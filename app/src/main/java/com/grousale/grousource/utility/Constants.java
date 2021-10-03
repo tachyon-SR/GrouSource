@@ -15,6 +15,7 @@ public class Constants {
     public static final String KEY_PRODUCT_PRICE = "productPrice";
     public static final String KEY_SHOP_PHONE= "shopPhone";
     public static final String KEY_PRODUCT_IMAGE_URL= "productImageUrl";
+    public static final String KEY_AVAILABILITY = "availability";
 
 
 

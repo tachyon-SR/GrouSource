@@ -1,5 +1,6 @@
 package com.grousale.grousource;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,10 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
+import com.grousale.grousource.activity.AdminActivity;
 import com.grousale.grousource.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    ImageButton menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,17 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
+        menu = findViewById(R.id.menu);
         tabs.setupWithViewPager(viewPager);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                    startActivity(intent);
+            }
+        });
 
     }
+
+
 }
