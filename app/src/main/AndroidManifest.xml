@@ -6,6 +6,8 @@
     <uses-permission
         android:name="android.permission.READ_PHONE_STATE"
         tools:remove="android:maxSdkVersion" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrouSource">
-        <activity android:name=".activity.AdminActivity"></activity>
+        <activity android:name=".activity.AdminActivity"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
         <activity android:name=".LocationActivity" />
         <activity
             android:name=".MainActivity"

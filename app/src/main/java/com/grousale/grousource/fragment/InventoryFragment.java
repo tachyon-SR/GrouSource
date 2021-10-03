@@ -1,23 +1,35 @@
 package com.grousale.grousource.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.grousale.grousource.R;
 
 import com.blikoon.qrcodescanner.QrCodeActivity;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 
 public class InventoryFragment extends Fragment {
@@ -43,6 +55,8 @@ public class InventoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+
+
     }
 
     @Override
@@ -56,14 +70,87 @@ public class InventoryFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(),QrCodeActivity.class);
-                startActivityForResult( i,REQUEST_CODE_QR_SCAN);
+                if(checkPermission()) {
+                    Intent i = new Intent(getActivity(), QrCodeActivity.class);
+                    startActivityForResult(i, REQUEST_CODE_QR_SCAN);
+                }
             }
         });
 
 
         return v;
 
+    }
+
+    private boolean checkPermission() {
+        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            Dexter.withContext(getContext())
+                    .withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+                @Override
+                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+                }
+
+                @Override
+                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    if (permissionDeniedResponse.isPermanentlyDenied()) {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", getActivity().getPackageName(), null));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+
+                    Toast.makeText(getContext(), "Permission is required for QR Code scanning", Toast.LENGTH_SHORT).show();
+                    onStop();
+
+                }
+
+                @Override
+                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                    permissionToken.continuePermissionRequest();
+
+                }
+            }).onSameThread()
+                    .check();
+        }
+
+        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.VIBRATE) != PackageManager.PERMISSION_GRANTED)
+        {
+            Dexter.withContext(getContext())
+                    .withPermission(Manifest.permission.VIBRATE).withListener(new PermissionListener() {
+                @Override
+                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+                }
+
+                @Override
+                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    if (permissionDeniedResponse.isPermanentlyDenied()) {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", getActivity().getPackageName(), null));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+
+                    Toast.makeText(getContext(), "Permission is required for QR Code scanning", Toast.LENGTH_SHORT).show();
+                    onStop();
+
+                }
+
+                @Override
+                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                    permissionToken.continuePermissionRequest();
+
+                }
+            }).onSameThread()
+                    .check();
+        }
+
+        return ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override

@@ -54,7 +54,7 @@ public class AddFragment extends Fragment {
     EditText productNameET, productPriceET, phoneET, addressET, landmarkET, shopNameET;
     ImageView imageView;
     Button submit,detect,available, notAvailable;
-    private String downloadUrl, storageDIR, finalText;
+    private String downloadUrl="", storageDIR, finalText;
     private ProgressDialog progressDialog;
     private Uri uri;
     private  int availability=1;
@@ -126,6 +126,10 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(checkValues()){
+                    if(downloadUrl.equals("")){
+                        Toast.makeText(getContext(), "Please Upload image", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     addToFireStore();
                 }
             }

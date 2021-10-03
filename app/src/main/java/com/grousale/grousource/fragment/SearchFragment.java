@@ -70,17 +70,20 @@ public class SearchFragment extends Fragment {
         recyclerView = v.findViewById(R.id.productRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        db = FirebaseFirestore.getInstance();
+        productRef = db.collection(Constants.KEY_PRODUCT_DB);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchQuery = search.getText().toString().trim();
+                Log.d("Search", search.getText().toString().trim());
                 showData(searchQuery);
             }
         });
 
-        db = FirebaseFirestore.getInstance();
-        productRef = db.collection(Constants.KEY_PRODUCT_DB);
+
 
 
 
@@ -90,7 +93,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void showData(String searchQuery) {
-        query = productRef.whereEqualTo("productName",searchQuery);
+        query = productRef.whereGreaterThanOrEqualTo("productName",searchQuery).orderBy("productName");
 
 
 
@@ -107,7 +110,7 @@ public class SearchFragment extends Fragment {
                 holder.productName.setText(model.getProductName());
                 holder.shopAddress.setText(model.getShopAddress());
                 holder.shopName.setText(model.getShopName());
-                Log.d("Image",model.getProductImageUrl());
+                //Log.d("Image",model.getProductImageUrl());
                 Glide.with(getActivity()).load(model.getProductImageUrl()).into(holder.productImage);
             }
 
@@ -130,5 +133,13 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        if(adapter!=null) {
+            adapter.stopListening();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 }
