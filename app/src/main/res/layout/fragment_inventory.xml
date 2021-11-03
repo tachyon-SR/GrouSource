@@ -1,15 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.InventoryFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.InventoryFragment"
+    >
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
 
     <Button
-        android:id="@+id/scanQR"
+        android:id="@+id/inScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Scan QR"
+        android:text="In Scan"
+        android:padding="@dimen/_2sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/outScan"
         />
-</FrameLayout>
+
+    <Button
+        android:id="@+id/outScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Out Scan"
+        android:padding="@dimen/_2sdp"
+        app:layout_constraintStart_toEndOf="@id/inScan"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:background="@drawable/square_bg"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:id="@+id/amazon"
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toStartOf="@id/flipkart"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/amazon"
+        app:layout_constraintTop_toBottomOf="@id/inScan"
+    />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/flipkart"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="8dp"
+        android:elevation="@dimen/_2sdp"
+        android:src="@drawable/flipkart"
+        app:layout_constraintEnd_toStartOf="@id/meesho"
+        app:layout_constraintStart_toEndOf="@+id/amazon"
+        app:layout_constraintTop_toBottomOf="@id/inScan" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/meesho"
+        android:elevation="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        app:layout_constraintStart_toEndOf="@id/flipkart"
+        app:layout_constraintEnd_toStartOf="@id/newProduct"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/meesho"
+        app:layout_constraintTop_toBottomOf="@id/inScan"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintTop_toBottomOf="@+id/inScan"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:id="@+id/newProduct"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        app:layout_constraintStart_toEndOf="@id/meesho"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="New Product"
+        android:background="@drawable/square_bg"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/maizic"
+        android:elevation="@dimen/_2sdp"
+        android:scaleType="centerInside"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@+id/amazon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/grousale"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/maizic"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintTop_toBottomOf="@+id/amazon"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:id="@+id/grousale"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        app:layout_constraintStart_toEndOf="@id/maizic"
+        app:layout_constraintEnd_toStartOf="@+id/store"
+        android:text="Grousale"
+        android:background="@drawable/square_bg"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintTop_toBottomOf="@+id/amazon"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:id="@+id/store"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        app:layout_constraintStart_toEndOf="@id/grousale"
+        app:layout_constraintEnd_toStartOf="@id/customer"
+        android:text="Store"
+        android:background="@drawable/square_bg"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintTop_toBottomOf="@+id/amazon"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:id="@+id/customer"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        app:layout_constraintStart_toEndOf="@id/store"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Customer"
+        android:background="@drawable/square_bg"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/skuText"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/maizic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="@+id/sku"
+        app:layout_constraintEnd_toEndOf="@+id/sku"
+        app:layout_constraintBottom_toTopOf="@+id/sku"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:text="SKU not scanned"
+        />
+
+    <TextView
+        android:id="@+id/trackingIDtext"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/maizic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+
+        app:layout_constraintStart_toStartOf="@+id/trackingID"
+        app:layout_constraintEnd_toEndOf="@+id/trackingID"
+        app:layout_constraintBottom_toTopOf="@+id/trackingID"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:text="ID not scanned"
+        />
+
+    <Button
+        android:layout_marginTop="@dimen/_8sdp"
+        android:id="@+id/sku"
+        android:text="Scan SKU"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/skuText"
+        app:layout_constraintEnd_toStartOf="@id/trackingID"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:layout_marginTop="@dimen/_8sdp"
+        android:id="@+id/trackingID"
+        android:text="Scan Tracking ID"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/skuText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sku"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imageRecyclerView"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/returnLL"
+        />
+
+    <Button
+        android:id="@+id/chooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Images"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageRecyclerView"
+        android:layout_marginTop="@dimen/_4sdp"
+        />
+
+    <LinearLayout
+        android:id="@+id/quantityLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/sku"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity: "
+            android:textSize="@dimen/_14sdp"
+            android:textAlignment="viewEnd"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            />
+
+        <EditText
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Quantity"
+            android:inputType="number"
+            android:layout_weight="1"
+            />
+
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/remarks"
+        app:layout_constraintTop_toBottomOf="@+id/quantityLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="Remarks"
+        android:layout_margin="@dimen/_4sdp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/returnLL"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/remarks"
+        android:weightSum="3"
+        >
+
+        <Button
+            android:id="@+id/goodReturn"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_height="wrap_content"
+            android:text="Good Return"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/badReturn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:text="Bad    Return"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/fraudReturn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:text="Fraud Return"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chooseImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="SUBMIT"
+        android:layout_marginTop="@dimen/_8sdp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

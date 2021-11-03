@@ -71,7 +71,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         db = FirebaseFirestore.getInstance();
-        productRef = db.collection(Constants.KEY_PRODUCT_DB);
+        productRef = db.collection(Constants.KEY_FIELDPRODUCT_DB);
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {

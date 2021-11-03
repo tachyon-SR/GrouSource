@@ -16,10 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrouSource">
-        <activity android:name=".activity.AdminActivity"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
+        <activity
+            android:name=".activity.BarCodeScannerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.AdminActivity"
+            android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".LocationActivity" />
         <activity
             android:name=".MainActivity"

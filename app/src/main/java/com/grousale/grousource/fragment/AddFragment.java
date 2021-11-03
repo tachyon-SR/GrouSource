@@ -164,7 +164,7 @@ public class AddFragment extends Fragment {
         product.put(Constants.LONGITUDE,customPrefManager.getString(Constants.LONGITUDE));
         product.put(Constants.KEY_AVAILABILITY,availability);
 
-        database.collection(Constants.KEY_PRODUCT_DB)
+        database.collection(Constants.KEY_FIELDPRODUCT_DB)
                 .document(productName+phone)
                 .set(product)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -262,7 +262,7 @@ public class AddFragment extends Fragment {
 
         StorageReference mStorage;
         storageDIR = productName+phone;
-        mStorage = FirebaseStorage.getInstance().getReference(Constants.KEY_PRODUCT_DB).child(storageDIR);
+        mStorage = FirebaseStorage.getInstance().getReference(Constants.KEY_FIELDPRODUCT_DB).child(storageDIR);
         progressDialog.show();
         StorageReference mReference = mStorage.child(finalText);
         int scaleDivider = 4;
