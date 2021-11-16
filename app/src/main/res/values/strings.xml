@@ -6,4 +6,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mapboxtoken">pk.eyJ1IjoidGFjaHlvbiIsImEiOiJja2FqYncwenMwOTIzMnNqdTFiaGZzN3dxIn0.iI7PdlovtwX5wE1OJSYUBw</string>
+    <string name="new_scan">New Scan</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="sync_now">Sync Now</string>
 </resources>

@@ -28,6 +28,7 @@ public class Constants {
     public static final String KEY_PLATFORM = "platform";
     public static final String KEY_TRACKINGID = "trackingID";
     public static final String KEY_RETURNTYPE = "returnType";
+    public static final String KEY_ITEMS = "ItemList";
 
 
 

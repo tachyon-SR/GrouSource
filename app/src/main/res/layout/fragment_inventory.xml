@@ -153,7 +153,7 @@
         app:layout_constraintEnd_toEndOf="@+id/sku"
         app:layout_constraintBottom_toTopOf="@+id/sku"
         android:layout_marginBottom="@dimen/_4sdp"
-        android:text="SKU not scanned"
+        android:text="Item ID not scanned"
         />
 
     <TextView
@@ -174,7 +174,7 @@
     <Button
         android:layout_marginTop="@dimen/_8sdp"
         android:id="@+id/sku"
-        android:text="Scan SKU"
+        android:text="Scan Item ID"
         android:layout_width="@dimen/_140sdp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/skuText"
@@ -240,8 +240,6 @@
             android:inputType="number"
             android:layout_weight="1"
             />
-
-
     </LinearLayout>
 
     <EditText
@@ -257,8 +255,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/returnLL"
-        android:visibility="gone"
+        android:id="@+id/returnnLL"
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@id/remarks"
         android:weightSum="3"
         >
@@ -287,6 +285,35 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_2sdp"
             android:text="Fraud Return"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/returnLL"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/returnnLL"
+        android:weightSum="2"
+        >
+
+
+        <Button
+            android:id="@+id/replaceReturn"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_height="wrap_content"
+            android:text="Replace Return"
+            android:layout_weight="1"
+            />
+        <Button
+            android:id="@+id/repairReturn"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_height="wrap_content"
+            android:text="Repair Return"
             android:layout_weight="1"
             />
 

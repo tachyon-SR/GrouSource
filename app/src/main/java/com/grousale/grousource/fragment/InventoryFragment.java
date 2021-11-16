@@ -34,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.grousale.grousource.R;
 
 import com.blikoon.qrcodescanner.QrCodeActivity;
+import com.grousale.grousource.activity.AdminActivity;
 import com.grousale.grousource.activity.BarCodeScannerActivity;
 import com.grousale.grousource.adapters.HorizontalRecyclerView;
 import com.grousale.grousource.databinding.FragmentInventoryBinding;
@@ -70,7 +71,7 @@ public class InventoryFragment extends Fragment {
     ArrayList<Uri> uri = new ArrayList<>();
     RecyclerView recyclerView;
     HorizontalRecyclerView adapter;
-    Button imageChoose,scanSKU,scanID,inScan,outScan,submit,goodReturn,badReturn,fraudReturn;
+    Button imageChoose,scanSKU,scanID,inScan,outScan,submit,goodReturn,badReturn,fraudReturn,repairReturn,replaceReturn;
     FragmentInventoryBinding binding;
     ImageView amazon,flipkart,meesho,maizic;
     TextView grousale,store,customer,newProduct;
@@ -93,8 +94,6 @@ public class InventoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -121,9 +120,11 @@ public class InventoryFragment extends Fragment {
         goodReturn = binding.goodReturn;
         badReturn = binding.badReturn;
         fraudReturn = binding.fraudReturn;
+        repairReturn = binding.repairReturn;
+        replaceReturn = binding.replaceReturn;
 
         buttons = new View[]{amazon, flipkart, meesho, maizic, grousale, store, customer,newProduct};
-        returnButtons = new View[]{goodReturn,badReturn,fraudReturn};
+        returnButtons = new View[]{goodReturn,badReturn,fraudReturn,repairReturn,replaceReturn};
 
         amazon.setOnClickListener(view -> {enableButton(amazon);clickedButton="Amazon"; });
         flipkart.setOnClickListener(view -> {enableButton(flipkart);clickedButton="Flipkart";});
@@ -147,6 +148,14 @@ public class InventoryFragment extends Fragment {
             enableReturnButton(fraudReturn);returnType="fraud";
             imageChoose.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);});
+        replaceReturn.setOnClickListener(view -> {
+            enableReturnButton(fraudReturn);returnType="replace";
+            imageChoose.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);});
+        repairReturn.setOnClickListener(view -> {
+            enableReturnButton(fraudReturn);returnType="repair";
+            imageChoose.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);});
 
         inScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,15 +271,21 @@ public class InventoryFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(getContext(), "Product Added Successfully!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Adding to database", Toast.LENGTH_SHORT).show();
+                            addtoProductDB();
                             reset();
-                        }
+                            }
+
                         else{
                             Toast.makeText(getContext(), "Something went wrong. Try Again.", Toast.LENGTH_SHORT).show();
                             Log.d("Add",task.getException().toString());
                         }
                     }
                 });
+    }
+
+    private void addtoProductDB() {
+
     }
 
     private void reset() {

@@ -4,10 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/drawable/square_bg.xml" value="0.1953125" />
+        <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/activity_admin.xml" value="0.22" />
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/activity_bar_code_scanner.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/activity_edit_item.xml" value="0.21" />
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/admin_sign_in.xml" value="0.10520833333333333" />
+        <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/dialog_sync.xml" value="0.10520833333333333" />
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/fragment_inventory.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/single_image_item.xml" value="0.1" />
+        <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/menu/menu_main.xml" value="0.25" />
+        <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/xml/network_security_config.xml" value="0.1" />
       </map>
     </option>
   </component>
