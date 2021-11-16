@@ -1,5 +1,7 @@
 package com.grousale.grousource.retrofit;
 
+import com.google.common.collect.Lists;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -28,8 +30,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
-
-
 
     private static OkHttpClient client = new OkHttpClient();
     {
@@ -62,11 +62,13 @@ public class RetrofitClientInstance {
             .build();
 
 
-
-
     private static OkHttpClient client1 = new OkHttpClient.Builder()
-            .connectionSpecs(Collections.singletonList(spec1))
+            .connectionSpecs( Lists.newArrayList(spec1,spec2))
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
             .build();
+
 
 
 
