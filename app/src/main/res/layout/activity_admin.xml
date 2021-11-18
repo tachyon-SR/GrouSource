@@ -152,46 +152,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/returnLL"
-            android:visibility="gone"
+            android:id="@+id/searchLL"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@id/remarks"
             android:weightSum="3"
-            >
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/goodReturn"
+            <EditText
+                android:id="@+id/searchName"
                 android:layout_width="0dp"
-                android:layout_marginHorizontal="@dimen/_2sdp"
                 android:layout_height="wrap_content"
-                android:text="Good Return"
-                android:layout_weight="1"
+                android:layout_weight="2"
+                android:hint="Name"
                 />
 
             <Button
-                android:id="@+id/badReturn"
+                android:id="@+id/searchButton"
+                android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_2sdp"
-                android:text="Bad    Return"
                 android:layout_weight="1"
-                />
-
-            <Button
-                android:id="@+id/fraudReturn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_2sdp"
-                android:text="Fraud Return"
-                android:layout_weight="1"
+                android:text="Search"
                 />
 
         </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinnerSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/searchLL"
+            android:layout_margin="@dimen/_16sdp"
+            />
 
         <Button
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/remarks"
+            app:layout_constraintTop_toBottomOf="@id/spinnerSearch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="SUBMIT"

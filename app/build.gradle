@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.2"
 
     defaultConfig {
@@ -66,17 +66,15 @@ dependencies {
     //Permission helper
     implementation 'com.karumi:dexter:6.2.2'
 
-    def room_version = "2.2.5"
+    def room_version = "2.4.0-beta01"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "androidx.room:room-rxjava3:2.4.0-beta01"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     def rx_version = "3.0.0"
-    // optional - RxJava support for Room
-    //Room Database
     implementation "io.reactivex.rxjava3:rxandroid:$rx_version"
     implementation "io.reactivex.rxjava3:rxjava:$rx_version"
-    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

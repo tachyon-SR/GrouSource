@@ -1,33 +1,34 @@
 package com.grousale.grousource.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
-import com.grousale.grousource.R;
 import com.grousale.grousource.databinding.ActivityAdminBinding;
 import com.grousale.grousource.model.productItem;
+import com.grousale.grousource.model.products;
+import com.grousale.grousource.roomdatabase.RoomDao;
 import com.grousale.grousource.utility.Constants;
+import com.grousale.grousource.utility.ProductDatabase;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -43,23 +44,47 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class AdminActivity extends AppCompatActivity {
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.schedulers.AndroidSchedulers;
+
+public class AdminActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     FirebaseFirestore db;
     String key,pass,prodID,remarks,quantity,shelf;
     List<productItem> itemIDList = new ArrayList<>();
-    String TAG = "Adminctivity";
+    String TAG = "AdminActivity";
     ActivityAdminBinding binding;
     public static final int SCAN_ITEMID =103;
     public static final int SCAN_PRODID =104;
+    Spinner spinner;
+    List<products> prodList = new ArrayList<>();
+    RoomDao roomDao;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        spinner = binding.spinnerSearch;
 
         this.setTitle("Admin Activity");
+        prodList = ProductDatabase.getProductsList();
+
+        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Search", "Button Clicked");
+                String searchQuery = binding.searchName.getText().toString().trim();
+                Log.d("Search", "Query"+searchQuery);
+                setSpinnervalues(searchQuery);
+            }
+        });
 
         binding.productID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +128,23 @@ public class AdminActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void setSpinnervalues(String searchQuery) {
+
+        Flowable<List<String>> listFlowableMyDeals = roomDao.searchResults(searchQuery);
+        final List<String>[] prodList = new List[0];
+        Disposable disposable = listFlowableMyDeals
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    prodList[0] = list;
+                });
+
+        compositeDisposable.add(disposable);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, prodList[0]);
+        spinner.setAdapter(adapter);
     }
 
     private void addToFirestore() {
@@ -233,7 +275,6 @@ public class AdminActivity extends AppCompatActivity {
                     .withPermission(Manifest.permission.VIBRATE).withListener(new PermissionListener() {
                 @Override
                 public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-
                 }
 
                 @Override
@@ -262,5 +303,24 @@ public class AdminActivity extends AppCompatActivity {
 
         return ActivityCompat.checkSelfPermission(AdminActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(AdminActivity.this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String choice = (String) adapterView.getItemAtPosition(i);
+        Toast.makeText(this, choice, Toast.LENGTH_SHORT).show();
+        for (i = 0; i < prodList.size(); i++) {
+            if (prodList.get(i).getName().equals(choice)) {
+                prodID=prodList.get(i).getSku();
+                binding.productIDtext.setText(prodID);
+
+            }
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

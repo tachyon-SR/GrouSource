@@ -8,24 +8,32 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.grousale.grousource.activity.AdminActivity;
 import com.grousale.grousource.databinding.DialogSyncBinding;
 import com.grousale.grousource.model.items;
 import com.grousale.grousource.model.products;
 import com.grousale.grousource.retrofit.ApiInterface;
 import com.grousale.grousource.retrofit.RetrofitClientInstance;
+import com.grousale.grousource.roomdatabase.ProductsDB;
+import com.grousale.grousource.roomdatabase.ProductsRM;
+import com.grousale.grousource.roomdatabase.RoomDao;
 import com.grousale.grousource.utility.Constants;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +43,8 @@ public class SyncProducts extends Dialog {
 
     DialogSyncBinding binding;
     Context mContext;
+    List<products> productsList = new ArrayList<>();
+    RoomDao roomDao;
 
     public SyncProducts(@NonNull Context context) {
         super(context);
@@ -46,6 +56,8 @@ public class SyncProducts extends Dialog {
         super.onCreate(savedInstanceState);
         binding = DialogSyncBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ProductsDB productsDB = ProductsDB.getInstance(mContext);
+        roomDao = productsDB.roomDao();
 
         binding.syncNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,8 +85,9 @@ public class SyncProducts extends Dialog {
                     Log.d("Retrofit",response.code()+" ;"+response.message()+" ;"+response.errorBody());
                     return;
                 }
-                List<products> products = response.body().getProducts();
-                addtoFirebase(products);
+                productsList = response.body().getProducts();
+                addtoRoomDataBase(productsList);
+                addtoFirebase(productsList);
 
                  }
 
@@ -86,6 +99,43 @@ public class SyncProducts extends Dialog {
             }
 
         });
+    }
+
+    private void addtoRoomDataBase(List<products> productsList) {
+
+        ProductsRM productsRM;
+
+        for(int i=0;i<productsList.size();i++){
+            productsRM = new ProductsRM(
+                    productsList.get(i).getSku(),
+                    productsList.get(i).getName(),
+                    productsList.get(i).getId()
+            );
+            insertITemToRoom(productsRM);
+        }
+
+    }
+
+    private void insertITemToRoom(ProductsRM productsRM) {
+        Completable.fromAction(() ->
+                roomDao.insert(productsRM)).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("TAG", "onComplete: Called");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("TAG", "onError: Called" + e.getMessage());
+                    }
+                });
     }
 
     private void addtoFirebase(List<products> products) {
