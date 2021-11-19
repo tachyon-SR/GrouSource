@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.grousale.grousource.databinding.ActivityAdminBinding;
 import com.grousale.grousource.model.productItem;
 import com.grousale.grousource.model.products;
+import com.grousale.grousource.roomdatabase.ProductsDB;
 import com.grousale.grousource.roomdatabase.RoomDao;
 import com.grousale.grousource.utility.Constants;
 import com.grousale.grousource.utility.ProductDatabase;
@@ -44,13 +45,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+
+import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.schedulers.AndroidSchedulers;
 
 public class AdminActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -72,6 +72,8 @@ public class AdminActivity extends AppCompatActivity implements AdapterView.OnIt
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         spinner = binding.spinnerSearch;
+
+
 
         this.setTitle("Admin Activity");
         prodList = ProductDatabase.getProductsList();
@@ -132,11 +134,14 @@ public class AdminActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private void setSpinnervalues(String searchQuery) {
 
+        ProductsDB localDataBase = ProductsDB.getInstance(this);
+        roomDao = localDataBase.roomDao();
+
         Flowable<List<String>> listFlowableMyDeals = roomDao.searchResults(searchQuery);
         final List<String>[] prodList = new List[0];
-        Disposable disposable = listFlowableMyDeals
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+
+        Disposable disposable = listFlowableMyDeals.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers)
                 .subscribe(list -> {
                     prodList[0] = list;
                 });

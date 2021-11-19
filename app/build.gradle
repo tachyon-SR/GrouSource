@@ -67,9 +67,10 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.2'
 
     def room_version = "2.4.0-beta01"
+    //noinspection GradleDependency
     implementation "androidx.room:room-runtime:$room_version"
+    //noinspection GradleDependency
     implementation "androidx.room:room-rxjava2:$room_version"
-    implementation "androidx.room:room-rxjava3:2.4.0-beta01"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     def rx_version = "3.0.0"

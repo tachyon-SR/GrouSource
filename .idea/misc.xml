@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/THISPC/StudioProjects/GrouSource/app/src/main/res/layout/activity_admin.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/THISPC/StudioProjects/GrouSource/app/src/main/res/layout/activity_bar_code_scanner.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/THISPC/StudioProjects/GrouSource/app/src/main/res/layout/activity_edit_item.xml" value="0.14947916666666666" />
+        <entry key="..\:/Users/THISPC/StudioProjects/GrouSource/app/src/main/res/layout/activity_location.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/THISPC/StudioProjects/GrouSource/app/src/main/res/layout/activity_main.xml" value="0.14947916666666666" />
+        <entry key="..\:/Users/THISPC/StudioProjects/GrouSource/app/src/main/res/layout/admin_sign_in.xml" value="0.14947916666666666" />
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/drawable/square_bg.xml" value="0.1953125" />
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/activity_admin.xml" value="0.22" />
         <entry key="..\:/Users/user/StudioProjects/GrouSource/app/src/main/res/layout/activity_bar_code_scanner.xml" value="0.17916666666666667" />
